@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!-- style -->
+    <link rel="stylesheet" href=style.css type="text/css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>To do list</title>
+</head>
+<body>
+<div class="conteiner">
+    <h4>What should I do today???</h4>
+    <h5>Or make your life more organized and <a href="/add"><b>add new task</b></a></h5>
+
+    <div class="row">
+            <div class="col-sm-6">
+                <div th:each="task:${tasks}" class="card text-center" style="width: 18rem;">
+                    <div class="card-header" th:text="${task.getShortcut()}">
+                        Shortcut
+                    </div>
+                    <div class="card-body">
+                        <p class="card-title" th:text="${task.getDate()}" style="color: red;">deadline</p>
+                        <p class="card-text" th:text="${task.getDescription()}">description</p>
+                        <p class="card-text" th:text="${task.isExecution()}">done or not</p>
+                        <a href="/edit" class="btn btn-primary">Edit your task</a>
+
+                    </div>
+                    <div class="card-footer text-muted" th:text="${task.getTimescale()}">
+                        2 days ago
+                    </div>
+                </div>
+            </div>
+
+    </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- style -->
+    <link rel="stylesheet" href=style.css type="text/css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Add new task</title>
+</head>
+<body>
+
+<div class="conteiner" style="width: 50%">
+
+    <form th:action="@{/added}" method="post" th:object="${newTask}">
+        <div class="form-group" style="padding-top: 20px">
+            <h4>Let's create a new task!</h4>
+            <label for="exampleFormControlTextarea1">Shortcut for task</label>
+            <input th:field="*{shortcut}" class="form-control" type="text" placeholder="">
+
+
+            <div class="form-group">
+                <label for="datetimepicker1">Select deadline</label>
+                <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                    <input type="date" class="form-control datetimepicker-input" data-target="#datetimepicker1"/>
+                    <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
+            </div>
+            <script type="text/javascript">
+                $(function () {
+                    $('#datetimepicker1').datetimepicker();
+                });
+            </script>
+
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Select category</label>
+                <select th:field="*{category}" class="form-control"  id="exampleFormControlSelect1">
+                    <option th:each="category: ${T(pl.rtaj.to_do_list.TaskCategory).values()}"
+                    th:text="${category.name()}"
+                    th:value="${category.name()}">Category name</option>
+
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">Task in detailed</label>
+                <textarea th:field="*{description}" class="form-control" id="exampleFormControlTextarea1" rows="2"></textarea>
+            </div>
+            <button type="submit" class="btn btn-success">Add created task</button>
+
+        </div>
+    </form>
+</div>
+
+<!-- for bootstrap datepicker -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>
