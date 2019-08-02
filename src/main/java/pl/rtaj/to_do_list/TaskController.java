@@ -28,11 +28,12 @@ public class TaskController {
 
         TypedQuery<Task> query;
         if (!execution) {
-            query = entityManager.createQuery("SELECT t FROM Task t WHERE t.execution = 0", Task.class);
+            query = entityManager.createQuery("SELECT t FROM Task t WHERE t.execution = 0 ORDER BY t.date", Task.class);
         } else {
-            query = entityManager.createQuery("SELECT t FROM Task t WHERE t.execution = 1", Task.class);
+            query = entityManager.createQuery("SELECT t FROM Task t WHERE t.execution = 1 ORDER BY t.date", Task.class);
         }
 
+        
         List<Task> tasks = query.getResultList();
         model.addAttribute("tasks", tasks);
 
