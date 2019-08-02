@@ -28,26 +28,15 @@
     </div>
 
 
-
     <div class="content" style="clear:both; padding-top: 20px;">
         <div class="d-flex flex-wrap">
 
             <div th:each="task:${tasks}" class="card text-center" style="width: 12rem; margin: 10px">
 
-                    <div class="card-header" th:text="${task.getShortcut()}"
-                         th:style="${!task.isExecution() ? 'background-color:#ccffcc' : 'background-color:#cccccc'}">
-                    </div>
+                <div class="card-header" th:text="${task.getShortcut()}"
+                     th:style="${!task.isExecution() ? 'background-color:#ccffcc' : 'background-color:#cccccc'}">
+                </div>
 
-
-               <!-- <div th:switch="${task.isExecution()}">
-                    <p th:case="'false'">
-                        <div class="card-header" th:text="${task.getShortcut()}"
-                             style="background-color:#ccffcc"></div></p>
-
-                    <p th:case="'true'">
-                        <div class="card-header" th:text="${task.getShortcut()}"
-                             style="background-color:#cccccc"></div></p>
-                </div> -->
 
                 <div class="card-body">
 
@@ -55,7 +44,11 @@
                     <p class="card-title" th:text="${task.getDate()}" style="color: red;">deadline</p>
                     <p class="card-text" th:text="${task.getDescription()}">description</p>
                     <p class="card-text" th:text="${task.isExecution()}">done or not</p>
-                    <a th:href="|/edit?id=${task.id}|" class="btn btn-light">Edit your task</a>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <a class="btn btn-light" th:href="|/edit?id=${task.id}|">Edit.</a>
+                        <a class="btn btn-light" th:href="|/delete?id=${task.id}|">Delete.</a>
+                    </div>
+
                 </div>
                 <div class="card-footer text-muted" th:text="${task.getTimescale()}">
                     2 days ago

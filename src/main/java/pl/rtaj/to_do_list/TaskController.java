@@ -67,9 +67,7 @@ public class TaskController {
     public String editTask(@RequestParam Long id, Model model) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
-        //Optional<Task> task
         Task task = entityManager.find(Task.class, id);
-
         if (task == null) {
             return "redirect:/";
         }
@@ -95,6 +93,19 @@ public class TaskController {
 
         entityManager.getTransaction().begin();
         entityManager.persist(editTask);
+        entityManager.getTransaction().commit();
+        entityManager.close();
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/delete")
+    public String deleteTask(@RequestParam Long id){
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+        Task taskToRemove = entityManager.find(Task.class, id);
+        entityManager.getTransaction().begin();
+        entityManager.remove(taskToRemove);
         entityManager.getTransaction().commit();
         entityManager.close();
 

@@ -10,8 +10,9 @@
 </head>
 <body>
 <div class="conteiner" style="width: 50%; margin:auto">
-    <input type="hidden" th:field="*{id}">
+
     <form th:action="@{/edited}" method="post" th:object="${task}">
+        <input type="hidden" th:field="*{id}">
         <div class="form-group" style="padding-top: 20px">
             <h4>Edit your task here.</h4>
             <label for="exampleFormControlTextarea1">New shortcut for task</label>
