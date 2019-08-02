@@ -27,14 +27,31 @@
         </div>
     </div>
 
+
+
     <div class="content" style="clear:both; padding-top: 20px;">
         <div class="d-flex flex-wrap">
 
             <div th:each="task:${tasks}" class="card text-center" style="width: 12rem; margin: 10px">
-                <div class="card-header" th:text="${task.getShortcut()}">
-                    Shortcut
-                </div>
+
+                    <div class="card-header" th:text="${task.getShortcut()}"
+                         th:style="${!task.isExecution() ? 'background-color:#ccffcc' : 'background-color:#cccccc'}">
+                    </div>
+
+
+               <!-- <div th:switch="${task.isExecution()}">
+                    <p th:case="'false'">
+                        <div class="card-header" th:text="${task.getShortcut()}"
+                             style="background-color:#ccffcc"></div></p>
+
+                    <p th:case="'true'">
+                        <div class="card-header" th:text="${task.getShortcut()}"
+                             style="background-color:#cccccc"></div></p>
+                </div> -->
+
                 <div class="card-body">
+
+                    <p class="card-text text-info" th:text="${task.getCategory()}">Category</p>
                     <p class="card-title" th:text="${task.getDate()}" style="color: red;">deadline</p>
                     <p class="card-text" th:text="${task.getDescription()}">description</p>
                     <p class="card-text" th:text="${task.isExecution()}">done or not</p>
