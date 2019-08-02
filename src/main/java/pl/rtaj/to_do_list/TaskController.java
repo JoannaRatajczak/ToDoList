@@ -13,6 +13,7 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.List;
 
+
 @Controller
 public class TaskController {
 
@@ -33,7 +34,7 @@ public class TaskController {
             query = entityManager.createQuery("SELECT t FROM Task t WHERE t.execution = 1 ORDER BY t.date", Task.class);
         }
 
-        
+
         List<Task> tasks = query.getResultList();
         model.addAttribute("tasks", tasks);
 
@@ -66,23 +67,38 @@ public class TaskController {
     public String editTask(@RequestParam Long id, Model model) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
+        //Optional<Task> task
         Task task = entityManager.find(Task.class, id);
+
+        if (task == null) {
+            return "redirect:/";
+        }
+
         model.addAttribute("task", task);
         entityManager.close();
 
         return "edit";
     }
-   /* DO DOKONCZENIA JUTRO
+
     @PostMapping("/edited")
     @Transactional
-    public String editedTask(Task task, ){
+    public String editedTask(Task task) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
 
+        Task editTask = entityManager.find(Task.class, task.getId());
+        editTask.setId(task.getId());
+        editTask.setCategory(task.getCategory());
+        editTask.setDate(task.getDate());
+        editTask.setDescription(task.getDescription());
+        editTask.setExecution(task.isExecution());
+        editTask.setShortcut(task.getShortcut());
 
         entityManager.getTransaction().begin();
-        entityManager.persist(task);
+        entityManager.persist(editTask);
         entityManager.getTransaction().commit();
+        entityManager.close();
 
         return "redirect:/";
-    } */
+    }
 
 }
