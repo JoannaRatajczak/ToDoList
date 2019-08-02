@@ -3,12 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <!-- style -->
-    <link rel="stylesheet" href=style.css type="text/css">
+    <link rel="stylesheet" href=../static/style.css type="text/css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Edit your task</title>
 </head>
 <body>
+<div class="conteiner" style="width: 50%; margin:auto">
+    <form th:action="@{/edited}" method="post" th:object="${task}">
+        <div class="form-group" style="padding-top: 20px">
+            <h4>Edit your task here.</h4>
+            <label for="exampleFormControlTextarea1">New shortcut for task</label>
+            <input th:field="*{shortcut}" class="form-control" type="text" placeholder="">
 
+            <div class="form-group">
+                <label for="datetimepicker1">Select new deadline</label>
+                <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                    <input th:field="*{date}" type="date" class="form-control datetimepicker-input"
+                           data-target="#datetimepicker1"/>
+                    <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
+            </div>
+            <script type="text/javascript">
+                $(function () {
+                    $('#datetimepicker1').datetimepicker();
+                });
+            </script>
+
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Select new category</label>
+                <select th:field="*{category}" class="form-control" id="exampleFormControlSelect1">
+                    <option th:each="category: ${T(pl.rtaj.to_do_list.TaskCategory).values()}"
+                            th:text="${category.name()}"
+                            th:value="${category.name()}">Category name
+                    </option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">Edit description</label>
+                <textarea th:field="*{description}" class="form-control" id="exampleFormControlTextarea1"
+                          rows="2"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Task status:</label>
+                <div class="form-check form-check-inline">
+                    <input th:field="*{execution}" class="form-check-input" type="radio" name="inlineRadioOptions"
+                           id="inlineRadio1" value="false">
+                    <label class="form-check-label" for="inlineRadio1">Undone</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input th:field="*{execution}" class="form-check-input" type="radio" name="inlineRadioOptions"
+                           id="inlineRadio2" value="true">
+                    <label class="form-check-label" for="inlineRadio2">Done</label>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-success">Edit task</button>
+
+
+        </div>
+    </form>
+
+</div>
 </body>
 </html>

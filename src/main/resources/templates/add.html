@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- style -->
-    <link rel="stylesheet" href=style.css type="text/css">
+    <link rel="stylesheet" href=../static/style.css type="text/css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
@@ -13,7 +13,7 @@
 </head>
 <body>
 
-<div class="conteiner" style="width: 50%">
+<div class="conteiner" style="width: 50%; margin:auto">
 
     <form th:action="@{/added}" method="post" th:object="${newTask}">
         <div class="form-group" style="padding-top: 20px">
@@ -25,7 +25,7 @@
             <div class="form-group">
                 <label for="datetimepicker1">Select deadline</label>
                 <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-                    <input type="date" class="form-control datetimepicker-input" data-target="#datetimepicker1"/>
+                    <input th:field="*{date}" type="date" class="form-control datetimepicker-input" data-target="#datetimepicker1"/>
                     <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                     </div>

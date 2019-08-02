@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -17,51 +16,68 @@ import java.util.List;
 @Controller
 public class TaskController {
 
-    @Autowired
-    private EntityManagerFactory entityManagerFactory;
+    private final EntityManagerFactory entityManagerFactory;
+
+    public TaskController(EntityManagerFactory entityManagerFactory) {
+        this.entityManagerFactory = entityManagerFactory;
+    }
 
     @GetMapping("/")
-    public String home(Model model, @RequestParam(required = false) TaskCategory category) {
+    public String home(Model model, @RequestParam(required = false) boolean execution) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
         TypedQuery<Task> query;
-        if(category == null) {
-            query = entityManager.createQuery("SELECT t FROM Task t", Task.class);
+        if (!execution) {
+            query = entityManager.createQuery("SELECT t FROM Task t WHERE t.execution = 0", Task.class);
         } else {
-            query = entityManager.createQuery("SELECT t FROM Task t WHERE t.category = '" + category+"'", Task.class);
+            query = entityManager.createQuery("SELECT t FROM Task t WHERE t.execution = 1", Task.class);
         }
 
         List<Task> tasks = query.getResultList();
         model.addAttribute("tasks", tasks);
-        //model.addAttribute("newTask", new Task());
-        return "home";
 
+        return "home";
     }
 
     @GetMapping("/add")
     public String addTask(Model model) {
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-
-        TypedQuery<Task> query;
-        query = entityManager.createQuery("SELECT t FROM Task t", Task.class);
-        List<Task> tasks = query.getResultList();
-
         model.addAttribute("newTask", new Task());
-
 
         return null;
     }
 
     @PostMapping("/added")
     @Transactional
-    public String addedTask(Task task){
+    public String addedTask(Task task) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
         entityManager.getTransaction().begin();
         entityManager.persist(task);
         entityManager.getTransaction().commit();
 
-       return "redirect:/";
+        return "redirect:/";
     }
+
+    @GetMapping("/edit")
+    public String editTask(@RequestParam Long id, Model model) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+        Task task = entityManager.find(Task.class, id);
+        model.addAttribute("task", task);
+
+        return "edit";
+    }
+   /* DO DOKONCZENIA JUTRO
+    @PostMapping("/edited")
+    @Transactional
+    public String editedTask(Task task, ){
+
+
+        entityManager.getTransaction().begin();
+        entityManager.persist(task);
+        entityManager.getTransaction().commit();
+
+        return "redirect:/";
+    } */
 
 }
